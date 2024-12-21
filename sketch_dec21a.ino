@@ -10,6 +10,8 @@
 
 #include <LiquidCrystal.h>
 
+#define DIEUKHIEN 13 //dieu khien C1815
+
 OneWire oneWire(ONE_WIRE_BUS); 
 DallasTemperature sensors(&oneWire);
 
@@ -26,6 +28,10 @@ void setup(void)
   lcd.begin(16, 2);
   //In ra màn hình lcd dòng chữ Toi yeu Arduino
   lcd.print("Nhiet do hien tai");
+
+  //cau hinh chan dieu khien
+  pinMode(DIEUKHIEN, OUTPUT);
+  digitalWrite(DIEUKHIEN, LOW);
 } 
 void loop(void) 
 { 
@@ -46,4 +52,13 @@ void loop(void)
   lcd.print(nhietdo);
   lcd.setCursor(9, 1);
   lcd.print("do C");
+
+  //Kiem tra nhiet do de bat tat den suoi 
+  if(nhietdo<24.50) {
+    digitalWrite(DIEUKHIEN, HIGH);
+  }
+
+  if(nhietdo>28.50) {
+    digitalWrite(DIEUKHIEN, LOW);
+  }
 }
